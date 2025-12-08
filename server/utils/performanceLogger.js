@@ -66,7 +66,7 @@ export async function savePerformanceData(perfData, videoInfo = {}) {
 }
 
 /**
- * 통계 계산
+ * 통계 계산 (원본 데이터 기반, 정규화 없음)
  * @param {Array} sessions - 세션 배열
  * @returns {Object} 통계 정보
  */
@@ -77,65 +77,44 @@ function calculateStatistics(sessions) {
       averageTime: 0,
       minTime: 0,
       maxTime: 0,
-      stageAverages: {},
-      normalized30min: {}
+      stageAverages: {}
     };
   }
   
-  const STANDARD_DURATION = 30 * 60; // 30분 = 1800초
-  
   const stats = {
     totalProcessed: sessions.length,
-    averageTime: 0,        // 30분 기준 정규화된 평균
-    minTime: Infinity,     // 30분 기준 정규화된 최소
-    maxTime: 0,            // 30분 기준 정규화된 최대
-    stageAverages: {},
-    normalized30min: {}    // 30분 기준 정규화 통계
+    averageTime: 0,
+    minTime: Infinity,
+    maxTime: 0,
+    stageAverages: {}
   };
   
-  // 전체 시간 통계 (30분 기준 정규화)
-  const normalizedTimes = [];
+  // 전체 시간 통계 (원본 데이터)
+  const totalTimes = [];
   sessions.forEach(session => {
     const totalTime = session.totalTime || 0;
     if (totalTime > 0) {
-      const videoDuration = session.videoInfo?.durationSeconds || STANDARD_DURATION;
-      const normalizeFactor = STANDARD_DURATION / videoDuration;
-      const normalizedTotal = Math.round(totalTime * normalizeFactor);
-      normalizedTimes.push(normalizedTotal);
+      totalTimes.push(totalTime);
     }
   });
   
-  if (normalizedTimes.length > 0) {
-    stats.averageTime = Math.round(normalizedTimes.reduce((a, b) => a + b, 0) / normalizedTimes.length);
-    stats.minTime = Math.min(...normalizedTimes);
-    stats.maxTime = Math.max(...normalizedTimes);
+  if (totalTimes.length > 0) {
+    stats.averageTime = Math.round(totalTimes.reduce((a, b) => a + b, 0) / totalTimes.length);
+    stats.minTime = Math.min(...totalTimes);
+    stats.maxTime = Math.max(...totalTimes);
   } else {
     stats.minTime = 0;
   }
   
-  // 각 단계별 평균 시간 계산 (원본 + 정규화)
+  // 각 단계별 평균 시간 계산 (원본 데이터)
   const stageData = {};
-  const normalizedStageData = {};
   
   sessions.forEach(session => {
     if (!session.stages) return;
     
-    // 영상 길이 (초)
-    const videoDuration = session.videoInfo?.durationSeconds || STANDARD_DURATION;
-    const normalizeFactor = STANDARD_DURATION / videoDuration; // 30분 기준 환산 배율
-    
     Object.keys(session.stages).forEach(stageName => {
-      // 원본 데이터
       if (!stageData[stageName]) {
         stageData[stageName] = {
-          label: session.stages[stageName].label,
-          durations: []
-        };
-      }
-      
-      // 정규화 데이터
-      if (!normalizedStageData[stageName]) {
-        normalizedStageData[stageName] = {
           label: session.stages[stageName].label,
           durations: []
         };
@@ -144,36 +123,17 @@ function calculateStatistics(sessions) {
       const duration = session.stages[stageName].duration;
       if (duration && duration > 0) {
         stageData[stageName].durations.push(duration);
-        
-        // 30분 기준으로 정규화
-        const normalized = Math.round(duration * normalizeFactor);
-        normalizedStageData[stageName].durations.push(normalized);
       }
     });
   });
   
-  // 원본 평균 계산
+  // 평균 계산
   Object.keys(stageData).forEach(stageName => {
     const durations = stageData[stageName].durations;
     if (durations.length > 0) {
       const avg = Math.round(durations.reduce((a, b) => a + b, 0) / durations.length);
       stats.stageAverages[stageName] = {
         label: stageData[stageName].label,
-        average: avg,
-        min: Math.min(...durations),
-        max: Math.max(...durations),
-        count: durations.length
-      };
-    }
-  });
-  
-  // 30분 기준 정규화 평균 계산
-  Object.keys(normalizedStageData).forEach(stageName => {
-    const durations = normalizedStageData[stageName].durations;
-    if (durations.length > 0) {
-      const avg = Math.round(durations.reduce((a, b) => a + b, 0) / durations.length);
-      stats.normalized30min[stageName] = {
-        label: normalizedStageData[stageName].label,
         average: avg,
         min: Math.min(...durations),
         max: Math.max(...durations),
