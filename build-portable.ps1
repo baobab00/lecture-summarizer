@@ -1,10 +1,10 @@
 # ============================================================
-# Lecture Summarizer - Portable Build Script (v1.0.0)
+# Lecture Summarizer - Portable Build Script (v1.0.2)
 # PyInstaller onedir
 # ============================================================
 
 param(
-    [string]$Version = "1.0.0"
+    [string]$Version = "1.0.2"
 )
 
 $ErrorActionPreference = "Stop"
