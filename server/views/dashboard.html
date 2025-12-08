@@ -512,6 +512,32 @@
       letter-spacing: -0.5px;
     }
 
+    .perf-card-value-minmax {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .minmax-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .minmax-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: #9ca3af;
+      min-width: 28px;
+    }
+
+    .minmax-row span:last-child {
+      font-size: 20px;
+      font-weight: 700;
+      color: #111827;
+      letter-spacing: -0.5px;
+    }
+
     .perf-card-sub {
       font-size: 12px;
       color: #9ca3af;
@@ -526,12 +552,44 @@
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
       border: 1px solid #f3f4f6;
       margin-bottom: 24px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .stage-slider-container {
+      display: flex;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 200%;
+      position: relative;
+    }
+
+    .stage-slider-container.slide-right {
+      transform: translateX(-50%);
+    }
+
+    .stage-slide {
+      width: 50%;
+      flex-shrink: 0;
+      box-sizing: border-box;
+      padding-right: 28px;
+    }
+
+    .stage-slide:last-child {
+      padding-right: 0;
+      padding-left: 28px;
+    }
+
+    .stage-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
     }
 
     .stage-section h3 {
       font-size: 16px;
       font-weight: 700;
-      margin-bottom: 24px;
+      margin: 0;
       color: #111827;
       display: flex;
       align-items: center;
@@ -539,8 +597,149 @@
     }
 
     .stage-section h3::before {
-      content: '📊';
       font-size: 20px;
+    }
+
+    .stage-section h3.chart-title::before {
+      content: '📊';
+    }
+
+    .stage-section h3.predict-title::before {
+      content: '🔮';
+    }
+
+    .slide-indicators {
+      display: flex;
+      gap: 8px;
+    }
+
+    .slide-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .slide-indicator.active {
+      background: #22c55e;
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    .slide-hint {
+      font-size: 12px;
+      color: #6366f1;
+      text-align: center;
+      margin-top: 24px;
+      padding-top: 16px;
+      cursor: pointer;
+      transition: color 0.2s ease;
+      border-top: 1px solid #f3f4f6;
+    }
+
+    .slide-hint:hover {
+      color: #4f46e5;
+      text-decoration: underline;
+    }
+
+    .slide-hint i {
+      margin-left: 4px;
+    }
+
+    /* Prediction Card Styles */
+    .prediction-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .prediction-item {
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid #e2e8f0;
+      transition: all 0.3s ease;
+    }
+
+    .prediction-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .prediction-duration {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .prediction-duration::before {
+      content: '🎬 ';
+    }
+
+    .prediction-time {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .prediction-note {
+      font-size: 11px;
+      color: #94a3b8;
+      text-align: center;
+      margin-top: 12px;
+      font-style: italic;
+      opacity: 0.8;
+    }
+
+    .prediction-note::before {
+      content: 'ⓘ ';
+    }
+
+    .prediction-stats {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .prediction-stat {
+      text-align: center;
+    }
+
+    .prediction-stat-label {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-bottom: 4px;
+    }
+
+    .prediction-stat-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #475569;
+    }
+
+    .no-data-message {
+      text-align: center;
+      padding: 40px 20px;
+      color: #94a3b8;
+    }
+
+    .no-data-message .icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .no-data-message p {
+      margin: 0;
+      font-size: 14px;
     }
 
     .stage-item {
@@ -606,7 +805,6 @@
       font-size: 13px;
       font-weight: 600;
       color: #374151;
-      font-family: 'SF Mono', Monaco, monospace;
     }
 
     /* System Metrics */
@@ -671,7 +869,6 @@
     .metric-value {
       color: #111827;
       font-weight: 600;
-      font-family: 'SF Mono', Monaco, monospace;
     }
 
     .progress-bar {
@@ -976,12 +1173,14 @@
         <div class="perf-card-icon">⏱️</div>
         <div class="perf-card-title">평균 처리 시간</div>
         <div id="avg-time" class="perf-card-value">-</div>
-        <div class="perf-card-sub">30분 강의 기준</div>
       </div>
       <div class="perf-card">
         <div class="perf-card-icon">📉</div>
         <div class="perf-card-title">최소 / 최대</div>
-        <div id="min-max-time" class="perf-card-value small">-</div>
+        <div id="min-max-time" class="perf-card-value-minmax">
+          <div class="minmax-row"><span class="minmax-label">최소</span> <span id="min-time">-</span></div>
+          <div class="minmax-row"><span class="minmax-label">최대</span> <span id="max-time">-</span></div>
+        </div>
       </div>
       <div class="perf-card">
         <div class="perf-card-icon">🖥️</div>
@@ -1001,9 +1200,63 @@
       </div>
     </div>
 
-    <div class="stage-section">
-      <h3>단계별 소요 시간 (30분 강의 기준)</h3>
-      <div id="stage-chart"></div>
+    <div class="stage-section" id="stage-section">
+      <div class="stage-slider-container" id="stage-slider">
+        <!-- Slide 1: 단계별 평균 소요 시간 -->
+        <div class="stage-slide">
+          <div class="stage-header">
+            <h3 class="chart-title">단계별 평균 소요 시간</h3>
+            <div class="slide-indicators">
+              <span class="slide-indicator active" data-slide="0"></span>
+              <span class="slide-indicator" data-slide="1"></span>
+            </div>
+          </div>
+          <div id="stage-chart"></div>
+          <div class="slide-hint" onclick="slideToPredict()">예상 시간 보기 →</div>
+        </div>
+        <!-- Slide 2: 예상 처리 시간 -->
+        <div class="stage-slide">
+          <div class="stage-header">
+            <h3 class="predict-title">예상 처리 시간</h3>
+            <div class="slide-indicators">
+              <span class="slide-indicator" data-slide="0"></span>
+              <span class="slide-indicator active" data-slide="1"></span>
+            </div>
+          </div>
+          <div id="prediction-content">
+            <div class="prediction-grid">
+              <div class="prediction-item">
+                <div class="prediction-duration">15분 영상</div>
+                <div class="prediction-time" id="predict-15">-</div>
+              </div>
+              <div class="prediction-item">
+                <div class="prediction-duration">30분 영상</div>
+                <div class="prediction-time" id="predict-30">-</div>
+              </div>
+              <div class="prediction-item">
+                <div class="prediction-duration">45분 영상</div>
+                <div class="prediction-time" id="predict-45">-</div>
+              </div>
+              <div class="prediction-item">
+                <div class="prediction-duration">60분 영상</div>
+                <div class="prediction-time" id="predict-60">-</div>
+              </div>
+            </div>
+            <div class="prediction-stats">
+              <div class="prediction-stat">
+                <div class="prediction-stat-label">학습 데이터</div>
+                <div class="prediction-stat-value" id="predict-samples">0건</div>
+              </div>
+              <div class="prediction-stat">
+                <div class="prediction-stat-label">모델 정확도</div>
+                <div class="prediction-stat-value" id="predict-accuracy">-</div>
+              </div>
+            </div>
+            <div class="prediction-note">요청 건수가 많아질수록 예측 정확도가 향상됩니다</div>
+          </div>
+          <div class="slide-hint" onclick="slideToChart()">← 단계별 소요 시간 보기</div>
+        </div>
+      </div>
     </div>
 
     <div class="metrics-grid">
@@ -1033,6 +1286,166 @@
     let currentNodejsLogType = 'nodejs';
     let autoRefreshEnabled = true;
     let refreshIntervalId = null;
+    let currentSlide = 0;
+    let sessionData = []; // 회귀 분석용 세션 데이터
+
+    // Slide control functions
+    function slideToPredict() {
+      currentSlide = 1;
+      updateSlider();
+    }
+
+    function slideToChart() {
+      currentSlide = 0;
+      updateSlider();
+    }
+
+    function updateSlider() {
+      const slider = document.getElementById('stage-slider');
+      if (currentSlide === 1) {
+        slider.classList.add('slide-right');
+      } else {
+        slider.classList.remove('slide-right');
+      }
+      // Update indicators
+      document.querySelectorAll('.slide-indicator').forEach((ind, idx) => {
+        const slideIdx = parseInt(ind.dataset.slide);
+        if (slideIdx === currentSlide) {
+          ind.classList.add('active');
+        } else {
+          ind.classList.remove('active');
+        }
+      });
+    }
+
+    // Slide indicator clicks
+    document.querySelectorAll('.slide-indicator').forEach(ind => {
+      ind.addEventListener('click', () => {
+        currentSlide = parseInt(ind.dataset.slide);
+        updateSlider();
+      });
+    });
+
+    // Touch/Swipe support for stage section
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const stageSection = document.getElementById('stage-section');
+    
+    stageSection.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    
+    stageSection.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+    
+    function handleSwipe() {
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 50) { // minimum swipe distance
+        if (diff > 0 && currentSlide === 0) {
+          slideToPredict();
+        } else if (diff < 0 && currentSlide === 1) {
+          slideToChart();
+        }
+      }
+    }
+
+    // 로그 회귀 분석 함수
+    function performLogRegression(sessions) {
+      // (ln(영상길이), 처리시간) 데이터 포인트 추출
+      const dataPoints = [];
+      sessions.forEach(session => {
+        const duration = session.videoInfo?.durationSeconds;
+        const totalTime = session.totalTime;
+        if (duration && duration > 0 && totalTime && totalTime > 0) {
+          dataPoints.push({
+            x: Math.log(duration), // ln(영상길이)
+            y: totalTime           // 처리시간 (ms)
+          });
+        }
+      });
+
+      if (dataPoints.length < 2) {
+        return null; // 최소 2개 데이터 필요
+      }
+
+      // 최소제곱법으로 y = ax + b 계산
+      const n = dataPoints.length;
+      let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+      
+      dataPoints.forEach(p => {
+        sumX += p.x;
+        sumY += p.y;
+        sumXY += p.x * p.y;
+        sumX2 += p.x * p.x;
+      });
+
+      const denominator = n * sumX2 - sumX * sumX;
+      if (denominator === 0) return null;
+
+      const a = (n * sumXY - sumX * sumY) / denominator;
+      const b = (sumY - a * sumX) / n;
+
+      // R² (결정계수) 계산
+      const yMean = sumY / n;
+      let ssTotal = 0, ssResidual = 0;
+      
+      dataPoints.forEach(p => {
+        const yPred = a * p.x + b;
+        ssTotal += Math.pow(p.y - yMean, 2);
+        ssResidual += Math.pow(p.y - yPred, 2);
+      });
+
+      const r2 = ssTotal > 0 ? 1 - (ssResidual / ssTotal) : 0;
+
+      return { a, b, r2, n };
+    }
+
+    // 예측 시간 계산
+    function predictTime(durationMinutes, model) {
+      if (!model) return null;
+      const durationSeconds = durationMinutes * 60;
+      const predicted = model.a * Math.log(durationSeconds) + model.b;
+      return Math.max(0, Math.round(predicted));
+    }
+
+    // 예측 결과 업데이트
+    function updatePredictions(sessions) {
+      const model = performLogRegression(sessions);
+      
+      if (!model || model.n < 3) {
+        // 데이터 부족
+        document.getElementById('predict-15').textContent = '데이터 부족';
+        document.getElementById('predict-30').textContent = '데이터 부족';
+        document.getElementById('predict-45').textContent = '데이터 부족';
+        document.getElementById('predict-60').textContent = '데이터 부족';
+        document.getElementById('predict-samples').textContent = `${model?.n || 0}건`;
+        document.getElementById('predict-accuracy').textContent = '측정 불가';
+        return;
+      }
+
+      // 각 구간별 예측
+      document.getElementById('predict-15').textContent = formatTime(predictTime(15, model));
+      document.getElementById('predict-30').textContent = formatTime(predictTime(30, model));
+      document.getElementById('predict-45').textContent = formatTime(predictTime(45, model));
+      document.getElementById('predict-60').textContent = formatTime(predictTime(60, model));
+      
+      // 통계 정보
+      document.getElementById('predict-samples').textContent = `${model.n}건`;
+      
+      // R² 기반 정확도 표시
+      const accuracy = Math.round(model.r2 * 100);
+      let accuracyText = `${accuracy}%`;
+      if (accuracy < 50) {
+        accuracyText += ' (낮음)';
+      } else if (accuracy < 75) {
+        accuracyText += ' (보통)';
+      } else {
+        accuracyText += ' (높음)';
+      }
+      document.getElementById('predict-accuracy').textContent = accuracyText;
+    }
 
     // Tab switching
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1213,23 +1626,23 @@
         const stats = data.performance?.statistics || {};
         document.getElementById('total-processed').textContent = stats.totalProcessed || 0;
         document.getElementById('avg-time').textContent = formatTime(stats.averageTime || 0);
-        document.getElementById('min-max-time').textContent = 
-          `${formatTime(stats.minTime || 0)} / ${formatTime(stats.maxTime || 0)}`;
+        document.getElementById('min-time').textContent = formatTime(stats.minTime || 0);
+        document.getElementById('max-time').textContent = formatTime(stats.maxTime || 0);
 
         // Update stage chart
-        const normalized30min = stats.normalized30min || {};
+        const stageAverages = stats.stageAverages || {};
         const stageChart = document.getElementById('stage-chart');
         
         // Find max duration for percentage calculation
         let maxDuration = 1;
-        Object.values(normalized30min).forEach(stage => {
+        Object.values(stageAverages).forEach(stage => {
           if (stage.average > maxDuration) maxDuration = stage.average;
         });
 
         let stageHtml = '';
         let stageIndex = 0;
         Object.keys(stageLabels).forEach(key => {
-          const stage = normalized30min[key];
+          const stage = stageAverages[key];
           if (!stage) return;
           
           const percentage = (stage.average / maxDuration) * 100;
@@ -1252,6 +1665,10 @@
         } else {
           stageChart.innerHTML = '<div class="log-empty" style="background: transparent; padding: 40px;">아직 처리된 강의가 없습니다.</div>';
         }
+
+        // Update predictions with session data
+        const sessions = data.performance?.sessions || [];
+        updatePredictions(sessions);
 
         // Update system metrics
         const system = data.system || {};

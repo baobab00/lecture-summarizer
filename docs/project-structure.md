@@ -38,7 +38,7 @@ Lecture Summarizer는 강의 영상을 자동으로 전사하고 GPT를 이용�
 ┌─────────────────────────────────────
 │  Web Dashboard (Responsive UI)
 │  - Whisper/Node.js 로그
-│  - 성능 통계 (30분 기준 정규화)
+│  - 성능 통계 & 회귀 기반 예측
 │  - CPU/메모리 메트릭
 └─────────────────────────────────────
 ```
@@ -311,12 +311,12 @@ python tray_app/tray_manager.py
 - **종료 기능 수정**: `os._exit(0)`으로 강제 종료 (daemon 스레드 정리)
 - **메뉴 단순화**: 이모지 제거, 가독성 개선
 
-### 성능 통계 정규화
+### 성능 통계 및 예측
 
-- **`server/utils/performanceLogger.js`** - 30분 기준 정규화 적용
-- `averageTime`, `minTime`, `maxTime` 모두 정규화됨
-- 각 세션의 실제 영상 길이에 따라 자동 계산
-- 예: 10분 영상 × 3 = 30분 기준 시간
+- **`server/utils/performanceLogger.js`** - 성능 통계 저장 및 계산
+- **회귀 기반 예측**: 로그 회귀 모델로 영상 길이별 처리 시간 예측
+- `averageTime`, `minTime`, `maxTime` 실제 값 표시
+- 각 세션의 세부 단계별 소요 시간 기록
 
 ## 주요 기능 상세
 
@@ -355,10 +355,11 @@ python tray_app/tray_manager.py
 - **Node.js Logs 탭**: API & 에러 로그 조회
 - **Performance 탭**:
   - 총 처리 건수, 평균/최소/최대 시간
-  - 7단계별 소요 시간 차트
+  - 7단계별 소요 시간 차트 (스와이프 UI)
+  - **회귀 기반 예측**: 15/30/45/60분 영상 처리 시간 예측
+  - 모델 정확도 (R²) 표시
   - CPU/메모리 메트릭
   - 시스템 정보 (OS, CPU, 메모리, 가동시간)
-  - 영상 길이 자동 정규화
   - 5초 간격 자동 새로고침
 
 ## 관련 문서
