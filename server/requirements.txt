@@ -1,0 +1,15 @@
+# Faster-Whisper Local Transcription Server Dependencies
+
+# Core packages
+faster-whisper==1.1.0
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+
+# YouTube video download
+yt-dlp
+
+# System Tray App Dependencies
+pystray==0.19.5
+pillow==11.0.0
+requests==2.32.3
