@@ -1,0 +1,50 @@
+# Build and distribution artifacts
+dist/
+build/
+*.spec
+*.egg-info/
+*.manifest
+
+# Runtime (portable builds)
+runtime/
+
+# Node modules
+node_modules/
+server/node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+**/venv/
+
+# Logs
+logs/
+*.log
+server/whisper_server.log
+server/node_server.log
+tray_app/tray_app.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temp files
+server/tmp/*
+!server/tmp/.gitkeep
+
+# Environment
+.env
+.env.local
+server/.env
+server/.env.local
