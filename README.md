@@ -243,7 +243,6 @@ lecture-summarizer/
 │   └── tmp/                  # 임시 파일
 ├── tray_app/                 # 시스템 트레이 앱
 │   ├── tray_manager.py       # 서버 제어
-│   ├── log_viewer.py         # (Deprecated) tkinter 대시보드
 │   └── icon_*.ico            # 상태별 아이콘
 ├── logs/                     # 서버 로그
 │   ├── whisper.log
@@ -284,10 +283,6 @@ lecture-summarizer/
 - 영상 길이 자동 정규화 (예: 10분 영상 → ×3, 60분 영상 → ÷2)
 - 최대 200개 세션 이력 보관
 - 자동 새로고침 (5초 간격)
-
-### Deprecated: tkinter 대시보드
-
-이전 버전에서 사용되던 tkinter 기반 네이티브 대시보드(`tray_app/log_viewer.py`)는 더 이상 사용되지 않습니다. 해당 코드는 참고용으로 보존되어 있으나, 현재 실행 흐름에서는 완전히 분리되어 있습니다. 모든 대시보드 기능은 웹 기반으로 제공됩니다.
 
 ### 로그 형식
 
