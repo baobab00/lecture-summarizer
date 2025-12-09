@@ -574,7 +574,7 @@ function cleanupFiles(mp4Path, mp3Path, chunks, chunkDir) {
 
     try {
       if (fs.existsSync(chunkDir)) {
-        fs.rmdirSync(chunkDir, { recursive: true });
+        fs.rmSync(chunkDir, { recursive: true, force: true });
       }
     } catch (e) {}
   } catch (cleanupErr) {}

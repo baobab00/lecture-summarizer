@@ -48,3 +48,6 @@ server/tmp/*
 .env.local
 server/.env
 server/.env.local
+
+# Cache (Hugging Face models)
+.cache/
